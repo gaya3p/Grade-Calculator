@@ -200,10 +200,11 @@ class App(Tk):
 
   def addOutput(self):
     """ add button and output elements """
-    self.btnCalc = Button(self, text = "Calculate", activebackground='Cyan', bd=10, relief=RIDGE)
+    self.btnCalc = Button(self, text = "Calculate", command=self.calculate ,activebackground='Cyan', bd=10, relief=RIDGE)
     self.btnCalc.grid(row = 11, column = 5)
-    self.btnCalc["command"] = self.calculate
+    self.btnCalc.bind('<Return>', self.calculate)
 
+    
 
     #_________CT_____________  
     Label(self, text = "CT Weightage", font=self.otherFont).grid(row = 12, column = 0)
@@ -305,7 +306,9 @@ class App(Tk):
     #________________OveraLLLLL_____________
     total = (e+m+sc+s+h+it)/6
     self.lblTotal["text"] = "%.2f" % total
-    
+
+  def  but(self):
+    self.btnCalc.bind('<Return>', calculate) 
 def main():
   app = App()
   app.mainloop()
