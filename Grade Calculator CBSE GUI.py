@@ -8,7 +8,6 @@ from matplotlib import style
 class App(Tk):
   def __init__(self):
     Tk.__init__(self)
-    
     #___________FONTS_______________
     self.headerFont = ("Mistral", "28")
     self.paraFont=('Sansita One', '14', 'bold')
@@ -352,8 +351,10 @@ class App(Tk):
     plt.legend()
     plt.tight_layout()
     plt.show()
+    
 def main():
   app = App()
   app.mainloop()
+  
 if __name__ == "__main__":
   main()
