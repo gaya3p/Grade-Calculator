@@ -1,19 +1,20 @@
-""" gradeCalc.py
-    calculate grades with a GUI
-"""
-
 from tkinter import *
 import math
 import heapq
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
 
 class App(Tk):
   def __init__(self):
     Tk.__init__(self)
-
+    
     #___________FONTS_______________
     self.headerFont = ("Mistral", "28")
     self.paraFont=('Sansita One', '14', 'bold')
     self.otherFont=("Sansita One", '13')
+    
+    style.use("ggplot")
     
     self.title("Grade Calculator")
     self.addCT()
@@ -36,19 +37,17 @@ class App(Tk):
     Label(self, text = "Pre Mid Term", font=self.otherFont).grid(row = 2, column = 0)
     self.txtCT1e = Entry(self)
     self.txtCT1e.grid(row = 2, column = 1)
-    self.txtCT1e.insert(0, "50")
-    if int(self.txtCT1e.get()) > 50:
-      print ('Not Possible')
+    self.txtCT1e.insert(0, "47")
  	
     Label(self, text = "").grid(row = 2, column = 2)
     self.txtCT1Mat = Entry(self)
     self.txtCT1Mat.grid(row = 2, column = 3)
-    self.txtCT1Mat.insert(0, "50")
+    self.txtCT1Mat.insert(0, "48")
     
     Label(self, text = "").grid(row = 2, column = 4)
     self.txtCT1sc = Entry(self)
     self.txtCT1sc.grid(row = 2, column = 5)
-    self.txtCT1sc.insert(0, "50")
+    self.txtCT1sc.insert(0, "49")
 
     Label(self, text = "").grid(row = 2, column = 6)
     self.txtCT1s= Entry(self)
@@ -58,7 +57,7 @@ class App(Tk):
     Label(self, text = "").grid(row = 2, column = 8)
     self.txtCT1h = Entry(self)
     self.txtCT1h.grid(row = 2, column = 9)
-    self.txtCT1h.insert(0, "50")
+    self.txtCT1h.insert(0, "43")
 
     Label(self, text = "").grid(row = 2, column = 10)
     self.txtCT1it = Entry(self)
@@ -74,17 +73,17 @@ class App(Tk):
     Label(self, text = "").grid(row = 3, column = 2)
     self.txtCT2Mat = Entry(self)
     self.txtCT2Mat.grid(row = 3, column = 3)
-    self.txtCT2Mat.insert(0, "80")
+    self.txtCT2Mat.insert(0, "79")
 
     Label(self, text ="").grid(row = 3, column = 4)
     self.txtCT2sc = Entry(self)
     self.txtCT2sc.grid(row = 3, column = 5)
-    self.txtCT2sc.insert(0, "80")
+    self.txtCT2sc.insert(0, "74")
     
     Label(self, text = "").grid(row = 3, column = 6)
     self.txtCT2s = Entry(self)
     self.txtCT2s.grid(row = 3, column = 7)
-    self.txtCT2s.insert(0, "80")
+    self.txtCT2s.insert(0, "77")
     
     Label(self, text = "").grid(row = 3, column = 8)
     self.txtCT2h = Entry(self)
@@ -202,10 +201,8 @@ class App(Tk):
     """ add button and output elements """
     self.btnCalc = Button(self, text = "Calculate", command=self.calculate ,activebackground='Cyan', bd=10, relief=RIDGE)
     self.btnCalc.grid(row = 11, column = 5)
-    self.btnCalc.bind('<Return>', self.calculate)
-
+    self.bind('<Return>', self.calculate)
     
-
     #_________CT_____________  
     Label(self, text = "CT Weightage", font=self.otherFont).grid(row = 12, column = 0)
     self.lblCTe = Label(self, bg = "#fff", anchor = "w", relief = "groove")
@@ -264,7 +261,7 @@ class App(Tk):
     self.lblTotal = Label(self, bg = "#fff", anchor = "w", relief = "groove")
     self.lblTotal.grid(row = 15, column =5, sticky = "we")
     
-  def calculate(self):
+  def calculate(self, event=None):
     """ calculate the grades """
     #_____________LIST__FOR__AVG_______________
     e = [(math.ceil((int(self.txtCT1e.get()))/5)), (math.ceil((int(self.txtCT2e.get()))/8)), (math.ceil((int(self.txtCT3e.get()))/8))]
@@ -307,11 +304,56 @@ class App(Tk):
     total = (e+m+sc+s+h+it)/6
     self.lblTotal["text"] = "%.2f" % total
 
-  def  but(self):
-    self.btnCalc.bind('<Return>', calculate) 
+    #_________PLOTINGGG_________
+    means_CT1 = ((int(self.txtCT1e.get()))*2, (int(self.txtCT1Mat.get()))*2, (int(self.txtCT1sc.get()))*2, (int(self.txtCT1s.get()))*2,(int(self.txtCT1h.get()))*2,(int(self.txtCT1it.get()))*2)
+    means_CT2 = ((int(self.txtCT2e.get()))*1.25,(int(self.txtCT2Mat.get()))*1.25,(int(self.txtCT2sc.get()))*1.25,(int(self.txtCT2s.get()))*1.25,(int(self.txtCT2h.get()))*1.25,(int(self.txtCT2it.get()))*1.25)
+    means_CT3 = ((int(self.txtCT3e.get()))*1.25,(int(self.txtCT3Mat.get()))*1.25,(int(self.txtCT3sc.get()))*1.25,(int(self.txtCT3s.get()))*1.25,(int(self.txtCT3h.get()))*1.25,(int(self.txtCT3it.get()))*1.25)
+    means_FE = ((int(self.txtFEe.get()))*1.25,(int(self.txtFEMat.get()))*1.25,(int(self.txtFEsc.get()))*1.25,(int(self.txtFEs.get()))*1.25,(int(self.txtFEh.get()))*1.25,(int(self.txtFEit.get()))*1.25)
+
+
+    if total == 100:
+      Min_val=85
+    else:
+      Min_val=min(min(means_CT1), min(means_CT2), min(means_CT3), min(means_FE ))-3
+
+    n_groups = 6 
+    fig, ax = plt.subplots(num=None, figsize=(11, 8), dpi=80, facecolor='w', edgecolor='b')
+    fig.canvas.set_window_title('Graph')
+    index = np.arange(n_groups)
+    bar_width = 0.15
+    opacity = 0.8
+     
+    rects1 = plt.bar(index, means_CT1, bar_width,
+                     alpha=opacity,
+                     color='#1b0193',
+                     label='CT 1')
+     
+    rects2 = plt.bar(index+bar_width , means_CT2, bar_width,
+                     alpha=opacity,
+                     color='#4823ef',
+                     label='CT 2')
+
+    rects3 = plt.bar(index+bar_width+bar_width, means_CT3, bar_width,
+                     alpha=opacity,
+                     color='#0272e2',
+                     label='CT 3')
+
+    rects4 = plt.bar(index+bar_width+bar_width+bar_width , means_FE, bar_width,
+                     alpha=opacity,
+                     color='#09e4ef',
+                     label='Final')
+    
+    axes = plt.gca()
+    axes.set_ylim([Min_val,101])
+    plt.xlabel('Test')
+    plt.ylabel('Scores')
+    plt.title('')
+    plt.xticks(index + bar_width, ('English', 'Maths', 'Science', 'Social Science', 'Hindi', 'FIT'))
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
 def main():
   app = App()
   app.mainloop()
-
 if __name__ == "__main__":
   main()
