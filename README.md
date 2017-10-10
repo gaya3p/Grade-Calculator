@@ -1,5 +1,4 @@
 # Grade-Calculator
-<div align="left">&#x1F34E;&#x1F34F;&#x1F34E;&#x1F34F;&#x1F34E;&#x1F34F;&#x1F34E;&#x1F34F;</div>
 
 A mark Calculator for the new CBSE BOARD system in India (from 2017).
 
