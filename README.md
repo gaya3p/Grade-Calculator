@@ -12,7 +12,7 @@ A mark Calculator for the new CBSE BOARD system in India (from 2017).
 ## 2.The graph window...
 ![](images/Screenshot1.png)
 
-<div align="center">*************</div>
+<div align="center">&#x1F4D7;&#x1F4D8;&#x1F4D9;</div>
 
 #### Note: You need all of these modules...
 ```python
@@ -23,4 +23,4 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import style
 ```
-<div align="center">*************</div>
+<div align="center">&#x1F4D7;&#x1F4D8;&#x1F4D9;</div>
