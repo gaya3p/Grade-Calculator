@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <script>
+        function processForm() {
+            var temperature = Number(document.tempForm.temp.value);
+            var choice = document.tempForm.choice.value;
+
+            if (choice === 'celsius') {
+                var resultF = Math.round(((temperature * 1.8) + 32) * 100) / 100;
+                var resultK = Math.round((temperature + 273.15) * 100) / 100;
+                document.getElementById("result1").innerHTML = (`Temperature is ${resultF}\xB0F or ${resultK}K.`);
+            } else if (choice === 'farenheit') {
+                var resultC = Math.round((temperature - 32) * (5 / 9) * 100) / 100;
+                var resultK = Math.round((resultC + 273.15) * 100) / 100;
+                document.getElementById("result1").innerHTML = (`Temperature is ${resultC}\xB0C or ${resultK}K.`);
+            } else { // Kelvin...
+                var resultC = Math.round((temperature - 273.15) * 100) / 100;
+                var resultF =  Math.round((resultC * 1.8 + 32) * 100) / 100;
+                document.getElementById("result1").innerHTML = (`Temperature is ${resultC}\xB0C or ${resultF}\xB0F.`);
+            };
+            
+            // If it violates Heisenberg's uncertainity principle...?
+            if (resultK < 0) {
+                alert('Not Possible. It violates Heisenberg uncertainity principle.');
+            } else if (choice === 'kelvin' && temperature < 0) {
+                alert('Not Possible. It violates Heisenberg uncertainity principle.');
+            } else {};
+        }
+    </script>
+
+</head>
+
+<body>
+
+
+    <form name="tempForm">
+        <label>Temperature: </label>
+        <input type="number" name="temp" />
+        <br>
+
+        <input type="radio" name="choice" value="celsius" selected>Celsius
+        
+        <input type="radio" name="choice" value="farenheit">Farenheit
+       
+        <input type="radio" name="choice" value="kelvin">Kelvin<br>
+        
+
+        <input type="button" value="Convert" onclick="processForm()" />
+    </form>
+
+    <div id="result1"></div>
+    <div id="result2"></div>
+</body>
+
+</html>
