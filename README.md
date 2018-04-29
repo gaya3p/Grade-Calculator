@@ -2,7 +2,7 @@
 
 A mark Calculator for the new CBSE BOARD system in India (from 2017).
 
-> **Note:** This has two windows... one made with tkinter and theother with matplotlib. The second window will be shown only after you press the ```Calculate``` button or press <kbd>Enter</kbd> .
+> **Note:** This has two windows... one made with tkinter and the other with matplotlib. The second window will be shown only after you press the ```Calculate``` button or press <kbd>Enter</kbd> .
 
 <div align="center">&#x1F34E;&#x1F34F;&#x1F34E;&#x1F34F;&#x1F34E;&#x1F34F;&#x1F34E;&#x1F34F;</div>
 
