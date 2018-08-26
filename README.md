@@ -1,6 +1,6 @@
 # Grade-Calculator
 
-A mark Calculator for the new CBSE BOARD system in India (from 2017).
+A marks Calculator.
 
 > **Note:** This has two windows... one made with tkinter and the other with matplotlib. The second window will be shown only after you press the ```Calculate``` button or press <kbd>Enter</kbd> .
 
@@ -15,7 +15,7 @@ A mark Calculator for the new CBSE BOARD system in India (from 2017).
 
 <div align="center">&#x1F4D7;&#x1F4D8;&#x1F4D9;</div>
 
-#### Note: You need all of these modules...
+#### Note: You need to install these poeple...
 ```python
 from tkinter import *
 import math
